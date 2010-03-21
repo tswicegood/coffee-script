@@ -468,7 +468,7 @@ CODE          : /^((-|=)>)/
 MULTI_DENT    : /^((\n([ \t]*))+)(\.)?/
 LAST_DENTS    : /\n([ \t]*)/g
 LAST_DENT     : /\n([ \t]*)/
-ASSIGNMENT    : /^:$/
+ASSIGNMENT    : /^(:|=)$/
 
 # Regex-matching-regexes.
 REGEX_START        : /^\/[^\/ ]/

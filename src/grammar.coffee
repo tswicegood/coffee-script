@@ -493,7 +493,7 @@ grammar: {
     o "Expression > Expression",                -> new OpNode '>', $1, $3
     o "Expression >= Expression",               -> new OpNode '>=', $1, $3
 
-    o "Expression = Expression",                -> new OpNode '=', $1, $3
+    o "Expression == Expression",               -> new OpNode '==', $1, $3
     o "Expression != Expression",               -> new OpNode '!=', $1, $3
     o "Expression IS Expression",               -> new OpNode 'is', $1, $3
     o "Expression ISNT Expression",             -> new OpNode 'isnt', $1, $3
@@ -530,7 +530,7 @@ operators: [
   ["left",      '&', '|', '^']
   ["left",      '<=', '<', '>', '>=']
   ["right",     'DELETE', 'INSTANCEOF', 'TYPEOF']
-  ["left",      '=', '!=', 'IS', 'ISNT']
+  ["left",      '==', '!=', 'IS', 'ISNT']
   ["left",      '&&', '||', 'AND', 'OR']
   ["left",      '.']
   ["right",     'INDENT']
