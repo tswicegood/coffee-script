@@ -30,7 +30,7 @@ lexer: new Lexer()
 # Compile a string of CoffeeScript code to JavaScript, using the Coffee/Jison
 # compiler.
 exports.compile: compile: (code, options) ->
-  options ||= {}
+  options: options || {}
   try
     (parser.parse lexer.tokenize code).compile options
   catch err
@@ -68,7 +68,7 @@ exports.extend: (func) ->
 parser.lexer: {
   lex: ->
     token: @tokens[@pos] or [""]
-    @pos += 1
+    @pos: @pos + 1
     this.yylineno: token[2]
     this.yytext:   token[1]
     token[0]

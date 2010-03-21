@@ -8,7 +8,7 @@ result: nums.concat(negs).join(', ')
 ok result is '3, 6, 9, -20, -19, -18'
 
 # Ensure that ranges are safe. This used to infinite loop:
-j = 5
+j: 5
 result: for j in [j..(j+3)]
   j
 

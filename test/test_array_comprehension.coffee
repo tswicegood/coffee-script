@@ -13,8 +13,8 @@ ok odds.join(' ')  is "one! three!", 'object comprehension with a filter'
 
 
 evens: for num in [1, 2, 3, 4, 5, 6] when num % 2 is 0
-           num *= -1
-           num -= 2
+           num: num * -1
+           num: num - 2
            num * -1
 
 ok evens.join(', ') is '4, 6, 8', 'multiline array comprehension with filter'

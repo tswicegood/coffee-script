@@ -9,8 +9,8 @@ ok(if my_special_variable? then true else false)
 
 a: 5
 a: null
-a ?= 10
-b ?= 10
+a: a ? 10
+b: b ? 10
 
 ok a is 10 and b is 10
 

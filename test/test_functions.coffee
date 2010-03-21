@@ -42,7 +42,7 @@ memoize: (fn) ->
   (args...) ->
     key: args.toString()
     return cache[key] if cache[key]
-    cache[key] = fn.apply(self, args)
+    cache[key]: fn.apply(self, args)
 
 Math: {
   Add: (a, b) -> a + b

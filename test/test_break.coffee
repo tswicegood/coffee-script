@@ -3,7 +3,7 @@ array: [1,2,3]
 call_with_lambda: (l) -> null
 for i in array
   result: call_with_lambda(->)
-  if i == 2
+  if i = 2
     puts "i = 2"
   else
     break
@@ -16,7 +16,7 @@ some_func: (input) ->
   takes_lambda: (l) -> null
   for i in [1,2]
     result: takes_lambda(->)
-    if input == 1
+    if input = 1
       return 1
     else
       break

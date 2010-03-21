@@ -20,8 +20,8 @@ func: ->
     'error'
   else
     c.text + '---'
-  d = {
-    text = c.text
+  d: {
+    text: c.text
   }
 
   c.list: l for l in d.text.split('') when l is '-'

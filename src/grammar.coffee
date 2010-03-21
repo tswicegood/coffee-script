@@ -493,7 +493,7 @@ grammar: {
     o "Expression > Expression",                -> new OpNode '>', $1, $3
     o "Expression >= Expression",               -> new OpNode '>=', $1, $3
 
-    o "Expression == Expression",               -> new OpNode '==', $1, $3
+    o "Expression = Expression",                -> new OpNode '=', $1, $3
     o "Expression != Expression",               -> new OpNode '!=', $1, $3
     o "Expression IS Expression",               -> new OpNode 'is', $1, $3
     o "Expression ISNT Expression",             -> new OpNode 'isnt', $1, $3
@@ -503,15 +503,6 @@ grammar: {
     o "Expression AND Expression",              -> new OpNode 'and', $1, $3
     o "Expression OR Expression",               -> new OpNode 'or', $1, $3
     o "Expression ? Expression",                -> new OpNode '?', $1, $3
-
-    o "Expression -= Expression",               -> new OpNode '-=', $1, $3
-    o "Expression += Expression",               -> new OpNode '+=', $1, $3
-    o "Expression /= Expression",               -> new OpNode '/=', $1, $3
-    o "Expression *= Expression",               -> new OpNode '*=', $1, $3
-    o "Expression %= Expression",               -> new OpNode '%=', $1, $3
-    o "Expression ||= Expression",              -> new OpNode '||=', $1, $3
-    o "Expression &&= Expression",              -> new OpNode '&&=', $1, $3
-    o "Expression ?= Expression",               -> new OpNode '?=', $1, $3
 
     o "Expression INSTANCEOF Expression",       -> new OpNode 'instanceof', $1, $3
     o "Expression IN Expression",               -> new OpNode 'in', $1, $3
@@ -539,9 +530,8 @@ operators: [
   ["left",      '&', '|', '^']
   ["left",      '<=', '<', '>', '>=']
   ["right",     'DELETE', 'INSTANCEOF', 'TYPEOF']
-  ["left",      '==', '!=', 'IS', 'ISNT']
+  ["left",      '=', '!=', 'IS', 'ISNT']
   ["left",      '&&', '||', 'AND', 'OR']
-  ["right",     '-=', '+=', '/=', '*=', '%=', '||=', '&&=', '?=']
   ["left",      '.']
   ["right",     'INDENT']
   ["left",      'OUTDENT']
@@ -564,7 +554,7 @@ for name, alternatives of grammar
   grammar[name]: for alt in alternatives
     for token in alt[0].split ' '
       tokens.push token unless grammar[token]
-    alt[1] = "return ${alt[1]}" if name is 'Root'
+    alt[1]: "return ${alt[1]}" if name is 'Root'
     alt
 
 # Initialize the **Parser** with our list of terminal **tokens**, our **grammar**
