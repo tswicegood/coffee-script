@@ -118,7 +118,7 @@ exports.Rewriter: class Rewriter
         when 'INDENT'     then stack.push(0)
         when 'OUTDENT'
           last: stack.pop()
-          stack[stack.length - 1]: stack[stack.length] + last
+          stack[stack.length - 1]: stack[stack.length - 1] + last
       open: stack[stack.length - 1] > 0
       if tag is 'CALL_END' and calls < 0 and open
         stack[stack.length - 1]: stack[stack.length - 1] - 1
