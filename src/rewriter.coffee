@@ -97,7 +97,7 @@ exports.Rewriter: class Rewriter
           else
             parens[parens.length - 1]: parens[parens.length - 1] - 1
         when ']'
-          if brackets[brackets.length - 1] = 0
+          if brackets[brackets.length - 1] is 0
             brackets.pop()
             token[0]: 'INDEX_END'
           else
@@ -175,15 +175,15 @@ exports.Rewriter: class Rewriter
   ensure_balance: (pairs) ->
     levels: {}
     open_line: {}
-    @scan_tokens (prev, token, post, i) =>
+    @scan_tokens (prev, token, post, i) ->
       for pair in pairs
         [open, close]: pair
         levels[open]: levels[open] || 0
         if token[0] is open
-          open_line[open]: token[2] if levels[open] = 0
+          open_line[open]: token[2] if levels[open] is 0
           levels[open]: levels[open] + 1
         levels[open]: levels[open] - 1 if token[0] is close
-        throw new Error("too many ${token[1]} on line ${token[2] + 1}") if levels[open] < 0
+        throw new Error("too many ${token[0]} on line ${token[2] + 1}") if levels[open] < 0
       return 1
     unclosed: key for key, value of levels when value > 0
     if unclosed.length
