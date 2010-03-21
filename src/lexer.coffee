@@ -192,7 +192,7 @@ exports.Lexer: class Lexer
   line_token: ->
     return false unless indent: @match MULTI_DENT, 1
     @line: @line + indent.match(MULTILINER).length
-    @i:    i + indent.length
+    @i:    @i + indent.length
     prev: @prev(2)
     size: indent.match(LAST_DENTS).reverse()[0].match(LAST_DENT)[1].length
     next_character: @chunk.match(MULTI_DENT)[4]

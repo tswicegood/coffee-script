@@ -75,7 +75,7 @@ task 'test', 'run the CoffeeScript language test suite', ->
   start_time: new Date()
   original_ok: ok
   helpers.extend global, {
-    ok: (args...) -> passed_tests += 1; original_ok(args...)
+    ok: (args...) -> passed_tests: passed_tests + 1; original_ok(args...)
     CoffeeScript: CoffeeScript
   }
   red: '\033[0;31m'
@@ -94,6 +94,6 @@ task 'test', 'run the CoffeeScript language test suite', ->
         try
           CoffeeScript.run code, {source: source}
         catch err
-          failed_tests += 1
+          failed_tests: failed_tests + 1
           puts "${red}failed:${reset} $source"
           puts err.stack
