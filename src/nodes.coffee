@@ -909,7 +909,7 @@ exports.OpNode: class OpNode extends BaseNode
 
   # The map of conversions from CoffeeScript to JavaScript symbols.
   CONVERSIONS: {
-    '=':   '==='
+    '==':   '==='
     '!=':   '!=='
     'and':  '&&'
     'or':   '||'

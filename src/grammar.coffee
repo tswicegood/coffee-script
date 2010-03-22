@@ -461,7 +461,6 @@ grammar: {
   # -type rule, but in order to make the precedence binding possible, separate
   # rules are necessary.
   Operation: [
-    o "! Expression",                           -> new OpNode '!', $2
     o "!! Expression",                          -> new OpNode '!!', $2
     o("- Expression",                           (-> new OpNode('-', $2)), {prec: 'UMINUS'})
     o("+ Expression",                           (-> new OpNode('+', $2)), {prec: 'UPLUS'})
@@ -493,16 +492,21 @@ grammar: {
     o "Expression > Expression",                -> new OpNode '>', $1, $3
     o "Expression >= Expression",               -> new OpNode '>=', $1, $3
 
-    o "Expression == Expression",               -> new OpNode '==', $1, $3
-    o "Expression != Expression",               -> new OpNode '!=', $1, $3
     o "Expression IS Expression",               -> new OpNode 'is', $1, $3
     o "Expression ISNT Expression",             -> new OpNode 'isnt', $1, $3
 
-    o "Expression && Expression",               -> new OpNode '&&', $1, $3
-    o "Expression || Expression",               -> new OpNode '||', $1, $3
     o "Expression AND Expression",              -> new OpNode 'and', $1, $3
     o "Expression OR Expression",               -> new OpNode 'or', $1, $3
     o "Expression ? Expression",                -> new OpNode '?', $1, $3
+
+    o "Expression -= Expression",               -> new OpNode '-=', $1, $3
+    o "Expression += Expression",               -> new OpNode '+=', $1, $3
+    o "Expression /= Expression",               -> new OpNode '/=', $1, $3
+    o "Expression *= Expression",               -> new OpNode '*=', $1, $3
+    o "Expression %= Expression",               -> new OpNode '%=', $1, $3
+    o "Expression ||= Expression",              -> new OpNode '||=', $1, $3
+    o "Expression &&= Expression",              -> new OpNode '&&=', $1, $3
+    o "Expression ?= Expression",               -> new OpNode '?=', $1, $3
 
     o "Expression INSTANCEOF Expression",       -> new OpNode 'instanceof', $1, $3
     o "Expression IN Expression",               -> new OpNode 'in', $1, $3
@@ -523,15 +527,16 @@ grammar: {
 #     (2 + 3) * 4
 operators: [
   ["left",      '?']
-  ["nonassoc",  'UMINUS', 'UPLUS', 'NOT', '!', '!!', '~', '++', '--']
+  ["nonassoc",  'UMINUS', 'UPLUS', 'NOT', '!!', '~', '++', '--']
   ["left",      '*', '/', '%']
   ["left",      '+', '-']
   ["left",      '<<', '>>', '>>>']
   ["left",      '&', '|', '^']
   ["left",      '<=', '<', '>', '>=']
   ["right",     'DELETE', 'INSTANCEOF', 'TYPEOF']
-  ["left",      '==', '!=', 'IS', 'ISNT']
-  ["left",      '&&', '||', 'AND', 'OR']
+  ["left",      'IS', 'ISNT']
+  ["left",      'AND', 'OR']
+  ["right",     '-=', '+=', '/=', '*=', '%=', '||=', '&&=', '?=']
   ["left",      '.']
   ["right",     'INDENT']
   ["left",      'OUTDENT']

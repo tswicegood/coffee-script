@@ -267,6 +267,7 @@ exports.Lexer: class Lexer
     else if include(CALLABLE, @tag()) and not_spaced
       tag: 'CALL_START'  if value is '('
       tag: 'INDEX_START' if value is '['
+    tag: CONVERSIONS[tag] or tag
     @token tag, value
     @i: @i + value.length
     true
@@ -507,3 +508,15 @@ ACCESSORS: ['PROPERTY_ACCESS', 'PROTOTYPE_ACCESS', 'SOAK_ACCESS', '@']
 # occurs at the start of a line. We disambiguate these from trailing whens to
 # avoid an ambiguity in the grammar.
 LINE_BREAK: ['INDENT', 'OUTDENT', 'TERMINATOR']
+
+# Translations from JS aliases into CoffeeScript operators:
+# The map of conversions from CoffeeScript to JavaScript symbols.
+CONVERSIONS: {
+  '==':  'IS'
+  '!=':  'ISNT'
+  '&&':  'AND'
+  '||':  'OR'
+  '===': 'IS'
+  '!==': 'ISNT'
+  '!':   'NOT'
+}
