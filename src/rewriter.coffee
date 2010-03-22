@@ -29,6 +29,7 @@ exports.Rewriter: class Rewriter
     @adjust_comments()
     @remove_leading_newlines()
     @remove_mid_expression_newlines()
+    @rewrite_half_assignments()
     @close_open_calls_and_indexes()
     @add_implicit_indentation()
     @add_implicit_parentheses()
@@ -77,6 +78,15 @@ exports.Rewriter: class Rewriter
       return 1 unless post and include(EXPRESSION_CLOSE, post[0]) and token[0] is 'TERMINATOR'
       @tokens.splice(i, 1)
       return 0
+
+  # Assignment to half-expressions `value: or default` is transformed into a
+  # real JS token, depending on whitespace.
+  rewrite_half_assignments: ->
+    @scan_tokens (prev, token, post, i) =>
+      return 1 unless post and post.spaced and token[0] is 'ASSIGN' and include OPERATORS, post[0]
+      op: post[1] + '='
+      @tokens.splice i, 2, [op, op, token[2]]
+      return 1
 
   # The lexer has tagged the opening parenthesis of a method call, and the
   # opening bracket of an indexing operation. Match them with their paired
@@ -275,3 +285,6 @@ IMPLICIT_END:   ['IF', 'UNLESS', 'FOR', 'WHILE', 'TERMINATOR', 'INDENT', 'OUTDEN
 # The grammar can't disambiguate them, so we insert the implicit indentation.
 SINGLE_LINERS: ['ELSE', "->", "=>", 'TRY', 'FINALLY', 'THEN']
 SINGLE_CLOSERS: ['TERMINATOR', 'CATCH', 'FINALLY', 'ELSE', 'OUTDENT', 'LEADING_WHEN']
+
+# List of the operations that can be used as half-assignments.
+OPERATORS: ['-', '+', '/', '*', '%', 'OR', 'AND', '?']

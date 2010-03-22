@@ -97,6 +97,7 @@ exports.Lexer: class Lexer
     tag: 'IDENTIFIER'
     tag: id.toUpperCase() if include(KEYWORDS, id) and
       not (include(ACCESSORS, @tag(0)) and not @prev().spaced)
+    tag: CONVERSIONS[tag] or tag
     @identifier_error id  if include RESERVED, id
     tag: 'LEADING_WHEN'   if tag is 'WHEN' and include LINE_BREAK, @tag()
     @token(tag, id)
@@ -267,7 +268,6 @@ exports.Lexer: class Lexer
     else if include(CALLABLE, @tag()) and not_spaced
       tag: 'CALL_START'  if value is '('
       tag: 'INDEX_START' if value is '['
-    tag: CONVERSIONS[tag] or tag
     @token tag, value
     @i: @i + value.length
     true
@@ -512,11 +512,9 @@ LINE_BREAK: ['INDENT', 'OUTDENT', 'TERMINATOR']
 # Translations from JS aliases into CoffeeScript operators:
 # The map of conversions from CoffeeScript to JavaScript symbols.
 CONVERSIONS: {
-  '==':  'IS'
-  '!=':  'ISNT'
-  '&&':  'AND'
-  '||':  'OR'
-  '===': 'IS'
-  '!==': 'ISNT'
-  '!':   'NOT'
+  'IS':   '=='
+  'ISNT': '!='
+  'AND':  '&&'
+  'OR':   '||'
+  'NOT':  '!'
 }
