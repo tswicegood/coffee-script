@@ -19,13 +19,15 @@ exports.test = vows.describe "Behavior of arguments in functions",
         x,
         y,
         x1,
-        y1)
+        y1
+      )
       assert.equal result, 100
 
     "broken across several lines with odd indentation": (topic) ->
       [[x, y, x1, y1], area] = topic
       result = area(x, y,
-                       x1, y1)
+                       x1, y1
+      )
       assert.equal result, 100
 
 
